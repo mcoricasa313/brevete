@@ -144,7 +144,7 @@ function boton0(){
 
         <tr>
 
-          <th colspan="2" bgcolor="#666666" style="font-size: 12px" scope="col">Ingreso al Sistema</th>
+          <th colspan="2" bgcolor="#666666" style="font-size: 12px" scope="col">Ingreso al Sistema de Capacitacion de Conductores</th>
 
         </tr>
 
