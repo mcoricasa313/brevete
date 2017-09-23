@@ -180,30 +180,6 @@ $totalRows_tramites = mysql_num_rows($tramites);
 
   <script src="SpryAssets/SpryValidationSelect.js" type="text/javascript"></script>
 
-  <script>
-
-  /*$(function() {
-
-    $( "#datepicker" ).datepicker({
-
-      showOn: "button",
-
-      buttonImage: "img/calendar.gif",
-
-      buttonImageOnly: true,
-
-      buttonText: "Select date"
-
-    });
-
-	 $('#datepicker').datepicker('option', {dateFormat: 'yy-mm-dd'});
-
-  });
-
-  */
-
-  </script>
-
 
 
 <script>
