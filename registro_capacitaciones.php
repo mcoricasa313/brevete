@@ -9,6 +9,43 @@ $tipo_user = $_SESSION['tipo_user'];
 <?php require_once('Connections/brevete.php'); ?>
 
 <?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+mysql_select_db($database_brevete, $brevete);
+$query_Recordset1 = "SELECT * FROM profesor";
+$Recordset1 = mysql_query($query_Recordset1, $brevete) or die(mysql_error());
+$row_Recordset1 = mysql_fetch_assoc($Recordset1);
+$totalRows_Recordset1 = mysql_num_rows($Recordset1);
+
 
 if (!function_exists("GetSQLValueString")) {
 
@@ -420,7 +457,7 @@ $postulante = $_POST["documento_postulante"];
 
 
 
-$insertar_datos_impresion = "insert into certificados(codigo_certificado,fecha_inicio,fecha_fin,prom_teoria,prom_practicas,horas_teoria,horas_practica,postulante) VALUES($codigo_certificado, '".$fecha_inicio."', '".$fecha_fin."', ".$prom_teoria.", ".$prom_practicas.", ".$horas_teoria.", ".$horas_practica.", ".$postulante.")";
+$insertar_datos_impresion = "insert into certificados(codigo_certificado,fecha_inicio,fecha_fin,prom_teoria,prom_practicas,horas_teoria,horas_practica,postulante,idprofesor,especialidad2) VALUES($codigo_certificado, '".$fecha_inicio."', '".$fecha_fin."', ".$prom_teoria.", ".$prom_practicas.", ".$horas_teoria.", ".$horas_practica.", ".$postulante.")";
 
 mysql_query($insertar_datos_impresion);
 
@@ -2142,6 +2179,37 @@ do {
 
                       </tr>
 
+                      <tr>
+                        <td align="left" style="color: #000">Profesor </td>
+                        <td align="left"><label for="select4"></label>
+                          <select name="nombres" id="select4">
+                            <option value="-1">Seleccionar</option>
+                            <?php
+do {  
+?>
+                            <option value="<?php echo $row_Recordset1['idprofesor']?>"><?php echo $row_Recordset1['nombres']?></option>
+                            <?php
+} while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
+  $rows = mysql_num_rows($Recordset1);
+  if($rows > 0) {
+      mysql_data_seek($Recordset1, 0);
+	  $row_Recordset1 = mysql_fetch_assoc($Recordset1);
+  }
+?>
+                          </select></td>
+                        <td align="left" style="color: #000">Calificacion Profesor</td>
+                        <td align="left"><label for="select5"></label>
+                          <select name="select25" id="select5">
+                            <option value="Seleccionar">Seleccionar</option>
+                            <option value="Bueno">Bueno</option>
+                            <option value="Malo">Malo</option>
+                            <option value="Regular">Regular</option>
+                          </select></td>
+                        <td align="left">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
                       <tr>
 
                         <td align="left" style="color: #000">Promedio Teoria</td>
